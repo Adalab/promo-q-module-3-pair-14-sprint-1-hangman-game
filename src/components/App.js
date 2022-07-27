@@ -1,6 +1,12 @@
+import { useState } from "react";
 import "../styles/App.scss";
 
 function App() {
+  const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const handlerClick = (ev) => {
+    setNumberOfErrors(numberOfErrors +1);
+    console.log(numberOfErrors);
+  }
   return (
     <div className="page">
       <header>
@@ -38,16 +44,17 @@ function App() {
               Escribe una letra:
             </label>
             <input
-              autocomplete="off"
+              autoComplete="off"
               className="form__input"
-              maxlength="1"
+              maxLength="1"
               type="text"
               name="last-letter"
               id="last-letter"
             />
           </form>
+          <button onClick={handlerClick}>Incrementar</button>
         </section>
-        <section className="dummy error-5">
+        <section className={  "dummy error-" +  numberOfErrors    }>
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
           <span className="error-11 line"></span>
