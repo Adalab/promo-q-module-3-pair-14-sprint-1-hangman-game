@@ -2,11 +2,21 @@ import { useState } from "react";
 import "../styles/App.scss";
 
 function App() {
+  const [lastLetter, setLastLetter] = useState("");
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+
+  const validLetters = ["a", "b", "c", "d", "e", "f", "g", "h", ""];
+
+  const handlerInput = (ev) => {
+    const letterInput = ev.target.value;
+    if (validLetters.includes(letterInput)) {
+      setLastLetter(letterInput);
+    }
+  };
   const handlerClick = (ev) => {
-    setNumberOfErrors(numberOfErrors +1);
+    setNumberOfErrors(numberOfErrors + 1);
     console.log(numberOfErrors);
-  }
+  };
   return (
     <div className="page">
       <header>
@@ -50,11 +60,13 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              value={lastLetter}
+              onChange={handlerInput}
             />
           </form>
           <button onClick={handlerClick}>Incrementar</button>
         </section>
-        <section className={  "dummy error-" +  numberOfErrors    }>
+        <section className={"dummy error-" + numberOfErrors}>
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
           <span className="error-11 line"></span>
