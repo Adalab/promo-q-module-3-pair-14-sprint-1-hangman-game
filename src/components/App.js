@@ -1,17 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/App.scss";
+import getRandomWord from "../services/api";
 
 function App() {
   const [lastLetter, setLastLetter] = useState("");
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [word, setWord] = useState("");
 
-  const validLetters = ["a", "b", "c", "d", "e", "f", "g", "h", ""];
+  console.log(word);
+  useEffect(() => {
+    getRandomWord().then((data) => setWord(data.word));
+  }, []);
+  const validLetters = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "ñ",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+    "á",
+    "é",
+    "í",
+    "ó",
+    "ú",
+    "",
+  ];
 
   const handlerInput = (ev) => {
-    const letterInput = ev.target.value;
+    const letterInput = ev.target.value.toLowerCase();
     if (validLetters.includes(letterInput)) {
       setLastLetter(letterInput);
     }
+
+    /*    if( letterInput.search( /[a-zñaeiou]/i ) !== -1 ) {
+      setLastLetter(letterInput);
+      //la isigbificaba que no tiene en cuenta mayusculas o minusculas
+    } */
+  };
+  const renderSolutionLetters = () => {
+    const wordLetters = word.split("");
+    console.log(wordLetters);
+    const htmlWord = wordLetters.map((oneChar) => {
+      return <li className="letter">{oneChar}</li>;
+    });
+    return htmlWord;
   };
   const handlerClick = (ev) => {
     setNumberOfErrors(numberOfErrors + 1);
@@ -27,7 +80,8 @@ function App() {
           <div className="solution">
             <h2 className="title">Solución:</h2>
             <ul className="letters">
-              <li className="letter">k</li>
+              {renderSolutionLetters()}
+              {/* <li className="letter">k</li>
               <li className="letter">a</li>
               <li className="letter"></li>
               <li className="letter">a</li>
@@ -36,7 +90,7 @@ function App() {
               <li className="letter"></li>
               <li className="letter">k</li>
               <li className="letter">e</li>
-              <li className="letter">r</li>
+              <li className="letter">r</li> */}
             </ul>
           </div>
           <div className="error">
